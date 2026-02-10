@@ -143,3 +143,188 @@ Tabela que define **para onde o tráfego de rede vai**.
 - Controlar rotas internas e externas  
 
 ---
+
+
+## Seção 3: Amazon Elastic Compute Cloud (Amazon EC2)
+
+O **Amazon EC2 (Elastic Compute Cloud)** é o serviço da AWS responsável por fornecer **servidores virtuais sob demanda**, permitindo executar aplicações de forma escalável, segura e com total controle do sistema operacional.
+
+Esta seção aborda, de forma prática, o ciclo completo de uso do EC2: criação, acesso, segurança, armazenamento, automação e escalabilidade.
+
+---
+
+### Lançando uma Instância EC2 Linux
+
+**O que é:**  
+Criação de uma instância EC2 com sistema operacional Linux.
+
+**Para que serve:**  
+- Hospedar aplicações  
+- Executar serviços backend  
+- Realizar testes e laboratórios  
+- Aprender fundamentos de servidores na nuvem  
+
+---
+
+### Conhecendo os Recursos
+
+**O que é:**  
+Exploração das configurações e características da instância EC2.
+
+**Para que serve:**  
+- Entender tipos de instância (CPU, memória, rede)  
+- Conhecer armazenamento, monitoramento e segurança  
+- Avaliar custos e desempenho  
+
+---
+
+### Acessando nossa Instância EC2 Linux
+
+**O que é:**  
+Conexão remota à instância Linux via **SSH**.
+
+**Para que serve:**  
+- Administrar o servidor  
+- Instalar pacotes  
+- Configurar aplicações  
+- Validar funcionamento do ambiente  
+
+---
+
+### Explorando o Security Group
+
+**O que é:**  
+Configuração do **Security Group**, o firewall da instância EC2.
+
+**Para que serve:**  
+- Controlar tráfego de entrada e saída  
+- Liberar portas específicas (SSH, HTTP, HTTPS)  
+- Garantir segurança da instância  
+
+---
+
+### Criando uma Instância Windows
+
+**O que é:**  
+Provisionamento de uma instância EC2 com sistema operacional Windows.
+
+**Para que serve:**  
+- Hospedar aplicações Windows  
+- Utilizar RDP para acesso remoto  
+- Executar sistemas legados  
+
+---
+
+### Anexando um Volume EBS à Instância Windows
+
+**O que é:**  
+Anexação de um volume **EBS (Elastic Block Store)** a uma instância Windows.
+
+**Para que serve:**  
+- Expandir espaço de armazenamento  
+- Separar dados do sistema operacional  
+- Garantir persistência dos dados  
+
+---
+
+### Anexando um Volume EBS à Instância Linux
+
+**O que é:**  
+Adição de um volume EBS a uma instância Linux.
+
+**Para que serve:**  
+- Armazenar dados de aplicações  
+- Criar partições adicionais  
+- Simular ambientes produtivos  
+
+---
+
+### Criando um Snapshot no EBS
+
+**O que é:**  
+Criação de um **snapshot**, que é uma cópia de segurança de um volume EBS.
+
+**Para que serve:**  
+- Backup de dados  
+- Recuperação em caso de falha  
+- Base para criação de novos volumes ou AMIs  
+
+---
+
+### Deletando Volumes e Snapshots
+
+**O que é:**  
+Remoção de volumes EBS e snapshots não utilizados.
+
+**Para que serve:**  
+- Evitar custos desnecessários  
+- Manter o ambiente organizado  
+- Gerenciar recursos corretamente  
+
+---
+
+### Criando IP Elástico (Elastic IP)
+
+**O que é:**  
+Criação de um **Elastic IP**, um endereço IP público fixo.
+
+**Para que serve:**  
+- Manter o mesmo IP mesmo após reiniciar a instância  
+- Facilitar acesso externo  
+- Usar em ambientes produtivos  
+
+---
+
+### Criando nossa AMI
+
+**O que é:**  
+Início do processo de criação de uma **AMI (Amazon Machine Image)**.
+
+**Para que serve:**  
+- Criar imagens reutilizáveis de instâncias  
+- Padronizar ambientes  
+- Facilitar clonagem de servidores  
+- Lançar novas instâncias idênticas  
+- Automatizar ambientes  
+- Acelerar deploys  
+
+---
+
+### Usando o CloudShell
+
+**O que é:**  
+Uso do **AWS CloudShell**, terminal web integrado à AWS.
+
+**Para que serve:**  
+- Executar comandos AWS CLI  
+- Gerenciar recursos sem instalar ferramentas locais  
+- Facilitar automações e testes rápidos  
+
+---
+
+### Usando o Resource Groups e Tag Editor
+
+**O que é:**  
+Gerenciamento de recursos usando **Tags** e **Resource Groups**.
+
+**Para que serve:**  
+- Organizar recursos por projeto, ambiente ou custo  
+- Facilitar governança  
+- Ajudar no controle financeiro (FinOps)  
+
+---
+
+### Escalando Instância EC2
+
+**O que é:**  
+Ajuste de capacidade computacional das instâncias EC2.
+
+**Para que serve:**  
+- Suportar aumento de carga  
+- Melhorar performance  
+- Garantir alta disponibilidade  
+
+**Exemplos:**  
+- Alterar tipo de instância  
+- Criar múltiplas instâncias  
+- Preparar para Auto Scaling 
