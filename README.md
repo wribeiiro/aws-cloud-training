@@ -1,330 +1,213 @@
-# AWS (Resumo para Estudo)
+# AWS – Principais Serviços (Resumo para estudo)
 
-A Amazon Web Services (AWS) é a principal plataforma de computação em nuvem do mercado, oferecendo uma ampla variedade de serviços para criar, hospedar e escalar aplicações de forma segura, flexível e sob demanda.
-
-A AWS permite que empresas e desenvolvedores utilizem recursos computacionais via internet, pagando apenas pelo que for utilizado. Isso acelera o desenvolvimento, reduz custos e aumenta a confiabilidade dos sistemas.
-
-Serão abordados serviços fundamentais como:
-
-- **IAM** (Identity and Access Management)
-   - Controle de usuários, permissões e segurança da conta AWS.
-
-- **VPC** (Virtual Private Cloud)
-   - Criação e gerenciamento de redes virtuais privadas na nuvem.
-
-- **EC2** (Elastic Compute Cloud)
-   - Provisionamento de servidores virtuais sob demanda.
-
-- **S3** (Simple Storage Service)
-   - Armazenamento de objetos com alta durabilidade e escalabilidade.
-
-- **RDS** (Relational Database Service)
-   - Banco de dados relacional gerenciado pela AWS.
-
-- **ECS** (Elastic Container Service)
-   - Execução e gerenciamento de aplicações em containers.
-
-##  Seção 1: Identity and Access Management (IAM)
-
-O **IAM** é o serviço da AWS responsável por **controle de acesso**, **autenticação** e **autorização**. Ele define **quem pode acessar** e **o que pode fazer** dentro da conta AWS.
+Este material apresenta os principais serviços da AWS com explicações mais profundas, ideal para estudo estruturado e revisão para certificações.
 
 ---
 
-### Adicionando MFA para Usuário Root
+<details>
+<summary><strong>IAM (Identity and Access Management)</strong></summary>
 
-**O que é:**  
-Ativação de **MFA (Multi-Factor Authentication)** para o usuário **Root** da conta AWS.
+### O que é
+O IAM é o serviço responsável por gerenciar **identidades e permissões** dentro da conta AWS. Ele controla autenticação (quem pode acessar) e autorização (o que pode fazer).
 
-**Para que serve:**  
-- Adiciona uma camada extra de segurança além da senha  
-- Exige um código temporário (app ou token físico)  
-- Protege a conta contra acessos indevidos  
+### Componentes principais
+- **Usuários:** Identidades individuais para pessoas ou sistemas.
+- **Grupos:** Conjunto de usuários com permissões semelhantes.
+- **Policies:** Documentos JSON que definem ações permitidas ou negadas.
+- **Roles (Funções):** Permissões temporárias assumidas por serviços ou aplicações.
+- **MFA (Multi-Factor Authentication):** Camada adicional de segurança.
 
-**Boas práticas:**  
-- O usuário Root **não deve ser usado no dia a dia**  
-- Sempre habilitar MFA para o Root  
+### Conceitos fundamentais
+- **Princípio do menor privilégio:** Conceder apenas as permissões necessárias.
+- **Credenciais temporárias:** Mais seguras do que credenciais fixas.
+- **Root user:** Deve ser usado apenas para tarefas administrativas críticas.
 
----
+### Por que é essencial
+- Base da segurança na AWS
+- Permite auditoria via CloudTrail
+- Reduz riscos de acesso indevido
 
-### Criando um Usuário Administrador
+### Cenários práticos
+- Criar usuários para equipe de desenvolvimento
+- Permitir que uma aplicação EC2 acesse o S3 usando Role
+- Restringir acesso a produção
 
-**O que é:**  
-Criação de um usuário IAM com **permissões administrativas**.
-
-**Para que serve:**  
-- Evita o uso do usuário Root  
-- Permite gerenciar recursos da AWS com segurança  
-- Facilita auditoria e rastreabilidade de ações  
-
-**Boas práticas:**  
-- Conceder a política `AdministratorAccess`  
-- Usar MFA também para esse usuário  
-
----
-
-### Criando um Grupo de Usuário
-
-**O que é:**  
-Um **Grupo IAM** é um conjunto de usuários que compartilham as mesmas permissões.
-
-**Para que serve:**  
-- Facilita o gerenciamento de acessos  
-- Evita configurar permissões usuário por usuário  
-- Padroniza permissões por função  
+</details>
 
 ---
 
-### Gerenciando Política de Senha
+<details>
+<summary><strong>VPC (Virtual Private Cloud)</strong></summary>
 
-**O que é:**  
-Configuração das regras de senha para usuários IAM.
+### O que é
+A VPC é uma rede virtual isolada dentro da AWS onde você define IPs, sub-redes, rotas e regras de segurança.
 
-**Para que serve:**  
-- Força senhas mais seguras  
-- Reduz riscos de ataques por força bruta  
+### Componentes principais
+- **CIDR Block:** Faixa de IP da rede (ex: 10.0.0.0/16).
+- **Subnets:** Divisão da rede (pública ou privada).
+- **Route Tables:** Definem para onde o tráfego será direcionado.
+- **Internet Gateway:** Permite acesso à internet.
+- **NAT Gateway:** Permite saída para internet em subnets privadas.
+- **Security Groups e NACLs:** Camadas de firewall.
 
----
+### Conceitos fundamentais
+- Subnets públicas possuem rota para Internet Gateway.
+- Subnets privadas não possuem acesso direto à internet.
+- Separação de camadas (web, app, db) aumenta segurança.
 
-### Criando Política de Usuário
+### Por que é essencial
+- Base de qualquer arquitetura segura
+- Permite isolamento de ambientes (dev, homolog, prod)
+- Controla comunicação entre recursos
 
-**O que é:**  
-Política IAM define **quais ações são permitidas ou negadas**.
+### Cenários práticos
+- Criar arquitetura com servidor web público e banco privado
+- Configurar NAT para atualizações em instâncias privadas
 
-**Para que serve:**  
-- Controlar acesso a serviços e recursos  
-- Aplicar o princípio do **menor privilégio**  
-
----
-
-## Seção 2: Virtual Private Cloud (VPC)
-
-A **VPC** permite criar uma **rede virtual isolada** dentro da AWS.
-
----
-
-### Introdução à VPC
-
-**O que é:**  
-Uma **rede virtual privada** na AWS, totalmente configurável.
-
-**Para que serve:**  
-- Isolamento de rede  
-- Controle de tráfego  
+</details>
 
 ---
 
-### Criando a VPC
+<details>
+<summary><strong>EC2 (Elastic Compute Cloud)</strong></summary>
 
-**O que é:**  
-Criação da rede principal com um **CIDR Block**.
+### O que é
+Serviço de máquinas virtuais sob demanda, permitindo controle total do sistema operacional.
 
-**Para que serve:**  
-- Define o espaço de IPs da rede  
+### Componentes principais
+- **Instâncias:** Servidores virtuais.
+- **AMI:** Imagem base para criação da instância.
+- **Tipos de instância:** Otimizados para CPU, memória ou armazenamento.
+- **EBS:** Armazenamento em bloco persistente.
+- **Elastic IP:** IP público fixo.
 
----
+### Conceitos fundamentais
+- Escalabilidade vertical (trocar tipo de instância)
+- Escalabilidade horizontal (múltiplas instâncias)
+- Monitoramento via CloudWatch
 
-### Criando a Sub-rede (Subnet)
+### Por que é essencial
+- Flexibilidade total de configuração
+- Ideal para aplicações legadas ou customizadas
+- Base para ambientes tradicionais
 
-**O que é:**  
-Divisão da VPC em redes menores.
+### Cenários práticos
+- Hospedar API em PHP
+- Criar servidor para testes
+- Executar aplicação corporativa
 
-**Para que serve:**  
-- Organizar recursos  
-- Separar ambientes públicos e privados  
-
----
-
-### Route Table
-
-**O que é:**  
-Tabela que define **para onde o tráfego de rede vai**.
-
-**Para que serve:**  
-- Controlar rotas internas e externas  
-
----
-
-
-## Seção 3: Amazon Elastic Compute Cloud (Amazon EC2)
-
-O **Amazon EC2 (Elastic Compute Cloud)** é o serviço da AWS responsável por fornecer **servidores virtuais sob demanda**, permitindo executar aplicações de forma escalável, segura e com total controle do sistema operacional.
-
-Esta seção aborda, de forma prática, o ciclo completo de uso do EC2: criação, acesso, segurança, armazenamento, automação e escalabilidade.
+</details>
 
 ---
 
-### Lançando uma Instância EC2 Linux
+<details>
+<summary><strong>S3 (Simple Storage Service)</strong></summary>
 
-**O que é:**  
-Criação de uma instância EC2 com sistema operacional Linux.
+### O que é
+Serviço de armazenamento de objetos altamente escalável e durável.
 
-**Para que serve:**  
-- Hospedar aplicações  
-- Executar serviços backend  
-- Realizar testes e laboratórios  
-- Aprender fundamentos de servidores na nuvem  
+### Componentes principais
+- **Buckets:** Containers lógicos.
+- **Objetos:** Arquivos armazenados.
+- **Versionamento:** Histórico de versões.
+- **Lifecycle Rules:** Automação de transição ou exclusão.
+- **Storage Classes:** Standard, IA, Glacier.
 
----
+### Conceitos fundamentais
+- Durabilidade de 99.999999999%
+- Armazenamento ilimitado
+- Pode hospedar sites estáticos
 
-### Conhecendo os Recursos
+### Por que é essencial
+- Backup confiável
+- Armazenamento econômico
+- Base para Data Lakes
 
-**O que é:**  
-Exploração das configurações e características da instância EC2.
+### Cenários práticos
+- Armazenar uploads de usuários
+- Backup de banco de dados
+- Guardar logs de aplicação
 
-**Para que serve:**  
-- Entender tipos de instância (CPU, memória, rede)  
-- Conhecer armazenamento, monitoramento e segurança  
-- Avaliar custos e desempenho  
-
----
-
-### Acessando nossa Instância EC2 Linux
-
-**O que é:**  
-Conexão remota à instância Linux via **SSH**.
-
-**Para que serve:**  
-- Administrar o servidor  
-- Instalar pacotes  
-- Configurar aplicações  
-- Validar funcionamento do ambiente  
+</details>
 
 ---
 
-### Explorando o Security Group
+<details>
+<summary><strong>RDS (Relational Database Service)</strong></summary>
 
-**O que é:**  
-Configuração do **Security Group**, o firewall da instância EC2.
+### O que é
+Serviço gerenciado de banco de dados relacional, onde a AWS cuida da infraestrutura.
 
-**Para que serve:**  
-- Controlar tráfego de entrada e saída  
-- Liberar portas específicas (SSH, HTTP, HTTPS)  
-- Garantir segurança da instância  
+### Engines suportadas
+MySQL, PostgreSQL, MariaDB, Oracle, SQL Server e Aurora.
 
----
+### Componentes principais
+- **Instância de banco**
+- **Multi-AZ:** Alta disponibilidade automática.
+- **Read Replicas:** Escalabilidade de leitura.
+- **Snapshots:** Backup manual.
+- **Parameter Groups:** Configuração do banco.
 
-### Criando uma Instância Windows
+### Conceitos fundamentais
+- Backup automático configurável
+- Failover automático em Multi-AZ
+- Escalabilidade vertical simples
 
-**O que é:**  
-Provisionamento de uma instância EC2 com sistema operacional Windows.
+### Por que é essencial
+- Reduz trabalho operacional
+- Alta disponibilidade integrada
+- Segurança gerenciada
 
-**Para que serve:**  
-- Hospedar aplicações Windows  
-- Utilizar RDP para acesso remoto  
-- Executar sistemas legados  
+### Cenários práticos
+- Sistema web com banco relacional
+- API com persistência de dados
+- Aplicação corporativa transacional
 
----
-
-### Anexando um Volume EBS à Instância Windows
-
-**O que é:**  
-Anexação de um volume **EBS (Elastic Block Store)** a uma instância Windows.
-
-**Para que serve:**  
-- Expandir espaço de armazenamento  
-- Separar dados do sistema operacional  
-- Garantir persistência dos dados  
-
----
-
-### Anexando um Volume EBS à Instância Linux
-
-**O que é:**  
-Adição de um volume EBS a uma instância Linux.
-
-**Para que serve:**  
-- Armazenar dados de aplicações  
-- Criar partições adicionais  
-- Simular ambientes produtivos  
+</details>
 
 ---
 
-### Criando um Snapshot no EBS
+<details>
+<summary><strong>ECS (Elastic Container Service)</strong></summary>
 
-**O que é:**  
-Criação de um **snapshot**, que é uma cópia de segurança de um volume EBS.
+### O que é
+Serviço de orquestração de containers Docker.
 
-**Para que serve:**  
-- Backup de dados  
-- Recuperação em caso de falha  
-- Base para criação de novos volumes ou AMIs  
+### Componentes principais
+- **Cluster:** Infraestrutura onde containers rodam.
+- **Task Definition:** Configuração do container.
+- **Task:** Execução da definição.
+- **Service:** Mantém número fixo de containers ativos.
+- **Fargate:** Execução sem gerenciar servidores.
 
----
+### Conceitos fundamentais
+- Escalabilidade automática
+- Integração com Load Balancer
+- Ideal para microsserviços
 
-### Deletando Volumes e Snapshots
+### Por que é essencial
+- Facilita deploy de aplicações modernas
+- Reduz complexidade de infraestrutura
+- Integra com CI/CD
 
-**O que é:**  
-Remoção de volumes EBS e snapshots não utilizados.
+### Cenários práticos
+- Deploy de API containerizada
+- Microsserviços escaláveis
+- Aplicações cloud-native
 
-**Para que serve:**  
-- Evitar custos desnecessários  
-- Manter o ambiente organizado  
-- Gerenciar recursos corretamente  
-
----
-
-### Criando IP Elástico (Elastic IP)
-
-**O que é:**  
-Criação de um **Elastic IP**, um endereço IP público fixo.
-
-**Para que serve:**  
-- Manter o mesmo IP mesmo após reiniciar a instância  
-- Facilitar acesso externo  
-- Usar em ambientes produtivos  
+</details>
 
 ---
 
-### Criando nossa AMI
+# Visão Estratégica Final
 
-**O que é:**  
-Início do processo de criação de uma **AMI (Amazon Machine Image)**.
+Esses serviços formam o núcleo da arquitetura AWS:
 
-**Para que serve:**  
-- Criar imagens reutilizáveis de instâncias  
-- Padronizar ambientes  
-- Facilitar clonagem de servidores  
-- Lançar novas instâncias idênticas  
-- Automatizar ambientes  
-- Acelerar deploys  
+- IAM → Segurança
+- VPC → Rede
+- EC2 → Computação
+- S3 → Armazenamento
+- RDS → Banco de dados
+- ECS → Containers
 
----
-
-### Usando o CloudShell
-
-**O que é:**  
-Uso do **AWS CloudShell**, terminal web integrado à AWS.
-
-**Para que serve:**  
-- Executar comandos AWS CLI  
-- Gerenciar recursos sem instalar ferramentas locais  
-- Facilitar automações e testes rápidos  
-
----
-
-### Usando o Resource Groups e Tag Editor
-
-**O que é:**  
-Gerenciamento de recursos usando **Tags** e **Resource Groups**.
-
-**Para que serve:**  
-- Organizar recursos por projeto, ambiente ou custo  
-- Facilitar governança  
-- Ajudar no controle financeiro (FinOps)  
-
----
-
-### Escalando Instância EC2
-
-**O que é:**  
-Ajuste de capacidade computacional das instâncias EC2.
-
-**Para que serve:**  
-- Suportar aumento de carga  
-- Melhorar performance  
-- Garantir alta disponibilidade  
-
-**Exemplos:**  
-- Alterar tipo de instância  
-- Criar múltiplas instâncias  
-- Preparar para Auto Scaling 
+Dominar esses serviços é fundamental para arquiteturas seguras, escaláveis e modernas na AWS.
